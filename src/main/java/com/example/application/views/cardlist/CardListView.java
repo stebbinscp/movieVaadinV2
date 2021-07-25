@@ -61,14 +61,6 @@ public class CardListView extends Div implements AfterNavigationObserver {
         start.addClassName("date");
         header.add(title, start);
 
-//        Span post = new Span(person.getPost());
-//        post.addClassName("post");
-
-        HorizontalLayout actions = new HorizontalLayout();
-        actions.addClassName("actions");
-        actions.setSpacing(false);
-        actions.getThemeList().add("spacing-s");
-
         description.add(header);
         card.add(image, description);
         return card;
