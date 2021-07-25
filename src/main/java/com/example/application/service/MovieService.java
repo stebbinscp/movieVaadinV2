@@ -16,6 +16,7 @@ public class MovieService {
     }
 
 
+
     public void getMovies(ResponseCallback<Example> callback, String search) {
 
         System.out.println("fetching movies!");
