@@ -1,4 +1,4 @@
-package com.example.application.repository;
+package com.example.application.service;
 
 @FunctionalInterface
 public interface ResponseCallback<T> {

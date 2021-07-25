@@ -1,10 +1,10 @@
 package com.example.application.repository;
 
+import com.example.application.service.ResponseCallback;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.web.reactive.function.client.WebClient;
 import com.example.application.models.Example;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieRepository {
