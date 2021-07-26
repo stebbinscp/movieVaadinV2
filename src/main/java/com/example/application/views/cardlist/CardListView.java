@@ -5,13 +5,12 @@ import java.util.List;
 
 import com.example.application.models.D;
 import com.example.application.models.Example;
+import com.example.application.service.MovieService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
@@ -20,15 +19,20 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.component.notification.Notification;
 
 @PageTitle("Card List")
 @Route(value = "card-list", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 public class CardListView extends Div implements AfterNavigationObserver {
 
+    private MovieService movieService;
     Grid<Example> grid = new Grid<>();
 
-    public CardListView() {
+    private Notification notification = new Notification("Loading...", 500, Notification.Position.TOP_CENTER);
+
+    public CardListView(MovieService movieService) {
+        this.movieService = movieService;
         addClassName("card-list-view");
         setSizeFull();
         grid.setHeight("100%");
@@ -71,7 +75,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
         // Set some data when this view is displayed.
         List<Example> items = Arrays.asList();
-
+        notification.open();
         grid.setItems(items);
     }
 
