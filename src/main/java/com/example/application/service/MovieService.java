@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.example.application.models.Example;
 import com.example.application.repository.MovieRepository;
 
+import java.util.List;
+
 
 @Service
 public class MovieService {
@@ -16,8 +18,7 @@ public class MovieService {
     }
 
 
-
-    public void getMovies(ResponseCallback<Example> callback, String search) {
+    public void getMovies(ResponseCallback<List<D>> callback, String search) {
 
         System.out.println("fetching movies!");
 

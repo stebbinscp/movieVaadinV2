@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.application.models.D;
 import com.example.application.models.Example;
 import com.example.application.service.MovieService;
+import com.example.application.repository.MovieRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
@@ -31,7 +32,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
     private Notification notification = new Notification("Loading...", 500, Notification.Position.TOP_CENTER);
 
-    public CardListView(MovieService movieService) {
+    public CardListView(MovieRepository movieRepository) {
         this.movieService = movieService;
         addClassName("card-list-view");
         setSizeFull();
@@ -74,9 +75,18 @@ public class CardListView extends Div implements AfterNavigationObserver {
     public void afterNavigation(AfterNavigationEvent event) {
 
         // Set some data when this view is displayed.
-        List<Example> items = Arrays.asList();
+        List<D> items = Arrays.asList();
+        getMovies();
+//        grid.setItems(items);
+    }
+
+    private void getMovies(){
         notification.open();
-        grid.setItems(items);
+        movieService.getMovies(result -> getUI().get().access(() ->{
+            result.stream()
+                    .forEach(System.out::println);
+
+                }), "game of thrones");
     }
 
 
