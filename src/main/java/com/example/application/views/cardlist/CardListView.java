@@ -3,10 +3,9 @@ package com.example.application.views.cardlist;
 import java.util.Arrays;
 import java.util.List;
 
-import com.example.application.models.D;
-import com.example.application.models.Example;
+import com.example.application.models.MovieResponse;
+import com.example.application.models.Result;
 import com.example.application.service.MovieService;
-import com.example.application.repository.MovieRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
@@ -28,11 +27,11 @@ import com.vaadin.flow.component.notification.Notification;
 public class CardListView extends Div implements AfterNavigationObserver {
 
     private MovieService movieService;
-    Grid<Example> grid = new Grid<>();
+    Grid<Result> grid = new Grid<>();
 
     private Notification notification = new Notification("Loading...", 500, Notification.Position.TOP_CENTER);
 
-    public CardListView(MovieRepository movieRepository) {
+    public CardListView(MovieService movieService) {
         this.movieService = movieService;
         addClassName("card-list-view");
         setSizeFull();
@@ -42,14 +41,14 @@ public class CardListView extends Div implements AfterNavigationObserver {
         add(grid);
     }
 
-    private HorizontalLayout createCard(Example item) {
+    private HorizontalLayout createCard(Result item) {
         HorizontalLayout card = new HorizontalLayout();
         card.addClassName("card");
         card.setSpacing(false);
         card.getThemeList().add("spacing-s");
 
         Image image = new Image();
-        image.setSrc(item.getD().get(0).getI().getImageUrl());
+        image.setSrc(item.getImage().getUrl());
         VerticalLayout description = new VerticalLayout();
         description.addClassName("description");
         description.setSpacing(false);
@@ -60,9 +59,9 @@ public class CardListView extends Div implements AfterNavigationObserver {
         header.setSpacing(false);
         header.getThemeList().add("spacing-s");
 
-        Span title = new Span(item.getD().get(0).getL());
+        Span title = new Span(item.getTitle());
         title.addClassName("name");
-        Span start = new Span(item.getD().get(0).getY().toString());
+        Span start = new Span(item.getYear().toString());
         start.addClassName("date");
         header.add(title, start);
 
@@ -75,19 +74,22 @@ public class CardListView extends Div implements AfterNavigationObserver {
     public void afterNavigation(AfterNavigationEvent event) {
 
         // Set some data when this view is displayed.
-        List<D> items = Arrays.asList();
+        List<Result> items = Arrays.asList();
         getMovies();
 //        grid.setItems(items);
     }
 
     private void getMovies(){
         notification.open();
-        movieService.getMovies(result -> getUI().get().access(() ->{
-            result.stream()
-                    .forEach(System.out::println);
+        movieService.getMovies(result -> {
+            getUI().get().access(() -> {
+                System.out.println(result);
+                for (Result r : result) {
+                    System.out.println(r);
+                }
+                ;
+            });
+        }, "game of thrones");
 
-                }), "game of thrones");
-    }
-
-
+        }
 }

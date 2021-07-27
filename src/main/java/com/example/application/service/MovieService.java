@@ -1,8 +1,7 @@
 package com.example.application.service;
 
-import com.example.application.models.D;
+import com.example.application.models.Result;
 import org.springframework.stereotype.Service;
-import com.example.application.models.Example;
 import com.example.application.repository.MovieRepository;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class MovieService {
     }
 
 
-    public void getMovies(ResponseCallback<List<D>> callback, String search) {
+    public void getMovies(ResponseCallback<List<Result>> callback, String search) {
 
         System.out.println("fetching movies!");
 

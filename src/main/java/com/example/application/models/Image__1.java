@@ -6,14 +6,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
-public class I {
+public class Image__1 {
 
     @SerializedName("height")
     @Expose
     private Integer height;
-    @SerializedName("imageUrl")
+    @SerializedName("id")
     @Expose
-    private String imageUrl;
+    private String id;
+    @SerializedName("url")
+    @Expose
+    private String url;
     @SerializedName("width")
     @Expose
     private Integer width;
@@ -26,12 +29,20 @@ public class I {
         this.height = height;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getId() {
+        return id;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getWidth() {
