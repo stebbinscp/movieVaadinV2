@@ -17,6 +17,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.Route;
@@ -36,9 +37,27 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
     private Notification notification = new Notification("Loading...", 1000, Notification.Position.TOP_CENTER);
     private List<Result> items;
+    private TextField textField;
+    private String searchTerm;
 
     public CardListView(MovieService movieService) {
         this.movieService = movieService;
+        textField = new TextField();
+        textField.setLabel("Search Term");
+        textField.setPlaceholder("search...");
+        textField.setAutofocus(true);
+        textField.setWidthFull();
+        textField.addKeyDownListener(
+                keyDownEvent -> {
+                    String keyStroke = keyDownEvent.getKey().getKeys().toString();
+                    if (keyStroke.equals("[Enter]")){
+                        System.out.println(textField.getValue());
+                        searchTerm = textField.getValue();
+                        items.clear();
+                        getMovies(searchTerm);
+                    }
+                }
+        );
         addClassName("card-list-view");
         setSizeFull();
         grid.setHeight("100%");
@@ -52,7 +71,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
             }
         });
-        add(withClientsideScrollListener(grid));
+        add(textField,withClientsideScrollListener(grid));
     }
 
     @ClientCallable
@@ -63,7 +82,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
         double percentage = (double) scrollTop/(scrollHeight-clientHeight);
         if (percentage>0.8) {
-            getMovies(); // I don't have pagination in this application :/
+            getMovies(searchTerm); // I don't have pagination in this application :/
         }
 
     }
@@ -98,7 +117,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
     }
 
     private String getYear(Result item) {
-        if (null == item || null == item.getYear().toString()){
+        if (null == item || null == item.getYear()){
             return "";
         } else {
             return item.getYear().toString();
@@ -126,11 +145,11 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
         // Set some data when this view is displayed.
         items = new ArrayList<>();
-        getMovies();
+//        getMovies(searchTerm);
 
     }
 
-    private void getMovies(){
+    private void getMovies(String searchTerm){
         notification.open();
         movieService.getMovies(result -> {
             getUI().get().access(() -> {
@@ -140,8 +159,9 @@ public class CardListView extends Div implements AfterNavigationObserver {
                 }
 //                System.out.println(items);
                 grid.setItems(items);
+//                getUI().get().push();
             });
-        }, "game of thrones");
+        }, searchTerm);
 
 
         };
