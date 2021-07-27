@@ -7,8 +7,11 @@ import java.util.List;
 import com.example.application.models.MovieResponse;
 import com.example.application.models.Result;
 import com.example.application.service.MovieService;
+import com.vaadin.flow.component.ClientCallable;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -21,6 +24,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.component.notification.Notification;
+import elemental.json.JsonObject;
 
 @PageTitle("Card List")
 @Route(value = "card-list", layout = MainLayout.class)
@@ -30,7 +34,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
     private MovieService movieService;
     Grid<Result> grid = new Grid<>();
 
-    private Notification notification = new Notification("Loading...", 500, Notification.Position.TOP_CENTER);
+    private Notification notification = new Notification("Loading...", 1000, Notification.Position.TOP_CENTER);
     private List<Result> items;
 
     public CardListView(MovieService movieService) {
@@ -40,7 +44,28 @@ public class CardListView extends Div implements AfterNavigationObserver {
         grid.setHeight("100%");
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn(item -> createCard(item));
-        add(grid);
+        grid.addItemClickListener(new ComponentEventListener<ItemClickEvent<Result>>() {
+            @Override
+            public void onComponentEvent(ItemClickEvent<Result> resultItemClickEvent) {
+                System.out.println(resultItemClickEvent.getItem());
+
+
+            }
+        });
+        add(withClientsideScrollListener(grid));
+    }
+
+    @ClientCallable
+    public void onGridScroll(JsonObject scrollEvent) {
+        int scrollHeight = (int) scrollEvent.getNumber("sh");
+        int clientHeight = (int) scrollEvent.getNumber("ch");
+        int scrollTop = (int) scrollEvent.getNumber("st");
+
+        double percentage = (double) scrollTop/(scrollHeight-clientHeight);
+        if (percentage>0.8) {
+            getMovies(); // I don't have pagination in this application :/
+        }
+
     }
 
     private HorizontalLayout createCard(Result item) {
@@ -119,5 +144,15 @@ public class CardListView extends Div implements AfterNavigationObserver {
         }, "game of thrones");
 
 
-        }
+        };
+
+    private Grid<Result> withClientsideScrollListener(Grid<Result> grid) {
+        grid.getElement().executeJs("this.$.scroller.addEventListener('scroll', (scrollEvent) => " +
+                "{requestAnimationFrame(" +
+                "() => $0.$server.onGridScroll({sh: this.$.table.scrollHeight, " +
+                "ch: this.$.table.clientHeight, " +
+                "st: this.$.table.scrollTop}))},true)",
+                getElement());
+        return grid;
+    }
 }
