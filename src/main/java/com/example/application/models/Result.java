@@ -179,4 +179,12 @@ public class Result {
         this.previousEpisode = previousEpisode;
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                ", image=" + image +
+                ", title='" + title + '\'' +
+                ", titleType='" + titleType + '\''+
+                '}';
+    }
 }

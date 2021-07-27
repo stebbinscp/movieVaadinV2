@@ -1,5 +1,6 @@
 package com.example.application.views.cardlist;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
     Grid<Result> grid = new Grid<>();
 
     private Notification notification = new Notification("Loading...", 500, Notification.Position.TOP_CENTER);
+    private List<Result> items;
 
     public CardListView(MovieService movieService) {
         this.movieService = movieService;
@@ -48,7 +50,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
         card.getThemeList().add("spacing-s");
 
         Image image = new Image();
-        image.setSrc(item.getImage().getUrl());
+        image.setSrc(getUrl(item));
         VerticalLayout description = new VerticalLayout();
         description.addClassName("description");
         description.setSpacing(false);
@@ -59,9 +61,9 @@ public class CardListView extends Div implements AfterNavigationObserver {
         header.setSpacing(false);
         header.getThemeList().add("spacing-s");
 
-        Span title = new Span(item.getTitle());
+        Span title = new Span(getTitle(item));
         title.addClassName("name");
-        Span start = new Span(item.getYear().toString());
+        Span start = new Span(getYear(item));
         start.addClassName("date");
         header.add(title, start);
 
@@ -70,26 +72,52 @@ public class CardListView extends Div implements AfterNavigationObserver {
         return card;
     }
 
+    private String getYear(Result item) {
+        if (null == item || null == item.getYear().toString()){
+            return "";
+        } else {
+            return item.getYear().toString();
+        }
+    }
+
+    private String getTitle(Result item) {
+        if (null == item || null == item.getTitle()){
+            return "";
+        } else {
+            return item.getTitle();
+        }
+    }
+
+    private String getUrl(Result item) {
+        if (null == item || null == item.getImage() || null == item.getImage().getUrl()){
+            return "https://randomuser.me/api/portraits/men/24.jpg";
+        } else {
+            return item.getImage().getUrl();
+        }
+    }
+
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
 
         // Set some data when this view is displayed.
-        List<Result> items = Arrays.asList();
+        items = new ArrayList<>();
         getMovies();
-//        grid.setItems(items);
+
     }
 
     private void getMovies(){
         notification.open();
         movieService.getMovies(result -> {
             getUI().get().access(() -> {
-                System.out.println(result);
+
                 for (Result r : result) {
-                    System.out.println(r);
+                    items.add((r));
                 }
-                ;
+//                System.out.println(items);
+                grid.setItems(items);
             });
         }, "game of thrones");
+
 
         }
 }
