@@ -37,6 +37,8 @@ public class CardListView extends Div implements AfterNavigationObserver {
     private List<Result> items;
     private TextField textField;
     private String searchTerm;
+    private int offset = 0;
+    private static final int limit = 10;
 
     public CardListView(MovieService movieService) {
         this.movieService = movieService;
@@ -52,7 +54,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
                         System.out.println(textField.getValue());
                         searchTerm = textField.getValue();
                         items.clear();
-                        getMovies(searchTerm);
+                        getMovies(offset, limit, searchTerm);
                     }
                 }
         );
@@ -65,8 +67,6 @@ public class CardListView extends Div implements AfterNavigationObserver {
             @Override
             public void onComponentEvent(ItemClickEvent<Result> resultItemClickEvent) {
                 System.out.println(resultItemClickEvent.getItem());
-
-
             }
         });
         add(textField,withClientsideScrollListener(grid));
@@ -79,8 +79,9 @@ public class CardListView extends Div implements AfterNavigationObserver {
         int scrollTop = (int) scrollEvent.getNumber("st");
 
         double percentage = (double) scrollTop/(scrollHeight-clientHeight);
-        if (percentage>0.8) {
-            getMovies(searchTerm); // I don't have pagination in this application :/
+        if (percentage>0.9) {
+            offset += 10;
+            getMovies(offset, limit, searchTerm); // I don't have pagination in this application :/
         }
 
     }
@@ -143,23 +144,23 @@ public class CardListView extends Div implements AfterNavigationObserver {
 
         // Set some data when this view is displayed.
         items = new ArrayList<>();
-//        getMovies(searchTerm);
+        getMovies(offset, limit, searchTerm);
 
     }
 
-    private void getMovies(String searchTerm){
+    private void getMovies(int offset, int limit, String searchTerm){
         notification.open();
+        offset += 10;
         movieService.getMovies(result -> {
             getUI().get().access(() -> {
 
                 for (Result r : result) {
                     items.add((r));
                 }
-//                System.out.println(items);
                 grid.setItems(items);
 //                getUI().get().push();
             });
-        }, searchTerm);
+        }, offset, limit, searchTerm);
 
 
         };

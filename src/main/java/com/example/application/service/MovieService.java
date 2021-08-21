@@ -11,15 +11,14 @@ import java.util.List;
 public class MovieService {
 
     private MovieRepository movieRepository;
-    private final int limit = 20;
-    private final int offset = 0;
+
 
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
 
-    public void getMovies(ResponseCallback<List<Result>> callback, String search) {
+    public void getMovies(ResponseCallback<List<Result>> callback, int offset, int limit, String search) {
 
         System.out.println("fetching movies!");
 
