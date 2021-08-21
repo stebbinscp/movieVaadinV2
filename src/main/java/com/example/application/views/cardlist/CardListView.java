@@ -54,6 +54,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
                         System.out.println(textField.getValue());
                         searchTerm = textField.getValue();
                         items.clear();
+                        offset = 0;
                         getMovies(offset, limit, searchTerm);
                     }
                 }
