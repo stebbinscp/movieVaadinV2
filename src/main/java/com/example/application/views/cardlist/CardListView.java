@@ -59,6 +59,7 @@ public class CardListView extends Div implements AfterNavigationObserver {
                     }
                 }
         );
+        //
         addClassName("card-list-view");
         setSizeFull();
         grid.setHeight("100%");
