@@ -1,12 +1,7 @@
 
 package com.example.application.models;
 
-import java.util.List;
 import javax.annotation.Generated;
-
-import com.example.application.models.Image;
-import com.example.application.models.ParentTitle;
-import com.example.application.models.Principal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,104 +10,59 @@ public class Result {
 
     @SerializedName("id")
     @Expose
-    private String id;
-    @SerializedName("image")
-    @Expose
-    private Image image;
-    @SerializedName("runningTimeInMinutes")
-    @Expose
-    private Integer runningTimeInMinutes;
-    @SerializedName("nextEpisode")
-    @Expose
-    private String nextEpisode;
-    @SerializedName("numberOfEpisodes")
-    @Expose
-    private Integer numberOfEpisodes;
-    @SerializedName("seriesEndYear")
-    @Expose
-    private Integer seriesEndYear;
-    @SerializedName("seriesStartYear")
-    @Expose
-    private Integer seriesStartYear;
+    private Integer id;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("titleType")
+    @SerializedName("img")
     @Expose
-    private String titleType;
+    private String img;
+    @SerializedName("vtype")
+    @Expose
+    private String vtype;
+    @SerializedName("nfid")
+    @Expose
+    private Integer nfid;
+    @SerializedName("synopsis")
+    @Expose
+    private String synopsis;
+    @SerializedName("avgrating")
+    @Expose
+    private Double avgrating;
     @SerializedName("year")
     @Expose
     private Integer year;
-    @SerializedName("principals")
+    @SerializedName("runtime")
     @Expose
-    private List<Principal> principals = null;
-    @SerializedName("episode")
+    private Integer runtime;
+    @SerializedName("imdbid")
     @Expose
-    private Integer episode;
-    @SerializedName("season")
+    private String imdbid;
+    @SerializedName("poster")
     @Expose
-    private Integer season;
-    @SerializedName("parentTitle")
+    private String poster;
+    @SerializedName("imdbrating")
     @Expose
-    private ParentTitle parentTitle;
-    @SerializedName("previousEpisode")
+    private Double imdbrating;
+    @SerializedName("top250")
     @Expose
-    private String previousEpisode;
+    private Integer top250;
+    @SerializedName("top250tv")
+    @Expose
+    private Integer top250tv;
+    @SerializedName("clist")
+    @Expose
+    private String clist;
+    @SerializedName("titledate")
+    @Expose
+    private String titledate;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public Integer getRunningTimeInMinutes() {
-        return runningTimeInMinutes;
-    }
-
-    public void setRunningTimeInMinutes(Integer runningTimeInMinutes) {
-        this.runningTimeInMinutes = runningTimeInMinutes;
-    }
-
-    public String getNextEpisode() {
-        return nextEpisode;
-    }
-
-    public void setNextEpisode(String nextEpisode) {
-        this.nextEpisode = nextEpisode;
-    }
-
-    public Integer getNumberOfEpisodes() {
-        return numberOfEpisodes;
-    }
-
-    public void setNumberOfEpisodes(Integer numberOfEpisodes) {
-        this.numberOfEpisodes = numberOfEpisodes;
-    }
-
-    public Integer getSeriesEndYear() {
-        return seriesEndYear;
-    }
-
-    public void setSeriesEndYear(Integer seriesEndYear) {
-        this.seriesEndYear = seriesEndYear;
-    }
-
-    public Integer getSeriesStartYear() {
-        return seriesStartYear;
-    }
-
-    public void setSeriesStartYear(Integer seriesStartYear) {
-        this.seriesStartYear = seriesStartYear;
     }
 
     public String getTitle() {
@@ -123,12 +73,44 @@ public class Result {
         this.title = title;
     }
 
-    public String getTitleType() {
-        return titleType;
+    public String getImg() {
+        return img;
     }
 
-    public void setTitleType(String titleType) {
-        this.titleType = titleType;
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getVtype() {
+        return vtype;
+    }
+
+    public void setVtype(String vtype) {
+        this.vtype = vtype;
+    }
+
+    public Integer getNfid() {
+        return nfid;
+    }
+
+    public void setNfid(Integer nfid) {
+        this.nfid = nfid;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    public Double getAvgrating() {
+        return avgrating;
+    }
+
+    public void setAvgrating(Double avgrating) {
+        this.avgrating = avgrating;
     }
 
     public Integer getYear() {
@@ -139,52 +121,68 @@ public class Result {
         this.year = year;
     }
 
-    public List<Principal> getPrincipals() {
-        return principals;
+    public Integer getRuntime() {
+        return runtime;
     }
 
-    public void setPrincipals(List<Principal> principals) {
-        this.principals = principals;
+    public void setRuntime(Integer runtime) {
+        this.runtime = runtime;
     }
 
-    public Integer getEpisode() {
-        return episode;
+    public String getImdbid() {
+        return imdbid;
     }
 
-    public void setEpisode(Integer episode) {
-        this.episode = episode;
+    public void setImdbid(String imdbid) {
+        this.imdbid = imdbid;
     }
 
-    public Integer getSeason() {
-        return season;
+    public String getPoster() {
+        return poster;
     }
 
-    public void setSeason(Integer season) {
-        this.season = season;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
-    public ParentTitle getParentTitle() {
-        return parentTitle;
+    public Double getImdbrating() {
+        return imdbrating;
     }
 
-    public void setParentTitle(ParentTitle parentTitle) {
-        this.parentTitle = parentTitle;
+    public void setImdbrating(Double imdbrating) {
+        this.imdbrating = imdbrating;
     }
 
-    public String getPreviousEpisode() {
-        return previousEpisode;
+    public Integer getTop250() {
+        return top250;
     }
 
-    public void setPreviousEpisode(String previousEpisode) {
-        this.previousEpisode = previousEpisode;
+    public void setTop250(Integer top250) {
+        this.top250 = top250;
     }
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                ", image=" + image +
-                ", title='" + title + '\'' +
-                ", titleType='" + titleType + '\''+
-                '}';
+    public Integer getTop250tv() {
+        return top250tv;
     }
+
+    public void setTop250tv(Integer top250tv) {
+        this.top250tv = top250tv;
+    }
+
+    public String getClist() {
+        return clist;
+    }
+
+    public void setClist(String clist) {
+        this.clist = clist;
+    }
+
+    public String getTitledate() {
+        return titledate;
+    }
+
+    public void setTitledate(String titledate) {
+        this.titledate = titledate;
+    }
+
 }

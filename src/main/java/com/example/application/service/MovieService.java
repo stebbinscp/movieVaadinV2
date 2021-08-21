@@ -11,6 +11,8 @@ import java.util.List;
 public class MovieService {
 
     private MovieRepository movieRepository;
+    private final int limit = 20;
+    private final int offset = 0;
 
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -21,7 +23,7 @@ public class MovieService {
 
         System.out.println("fetching movies!");
 
-        movieRepository.getMovies(callback, search);
+        movieRepository.getMovies(callback, offset, limit, search);
 
 
     }

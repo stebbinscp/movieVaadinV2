@@ -1,10 +1,8 @@
 package com.example.application.views.cardlist;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import com.example.application.models.MovieResponse;
 import com.example.application.models.Result;
 import com.example.application.service.MovieService;
 import com.vaadin.flow.component.ClientCallable;
@@ -133,10 +131,10 @@ public class CardListView extends Div implements AfterNavigationObserver {
     }
 
     private String getUrl(Result item) {
-        if (null == item || null == item.getImage() || null == item.getImage().getUrl()){
+        if (null == item || null == item.getImg()){
             return "https://randomuser.me/api/portraits/men/24.jpg";
         } else {
-            return item.getImage().getUrl();
+            return item.getImg();
         }
     }
 
